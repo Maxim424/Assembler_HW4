@@ -1,4 +1,4 @@
-# Assembler_HW4
+# HW4. Threads
 
 Вариант 6
 
