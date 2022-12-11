@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <fstream>
+#include <ctime>
 
 const int chefNumber = 1; // Количество поваров.
 
@@ -85,9 +86,16 @@ int main(int argc, char **argv) {
             std::cout << "Incorrect input\n";
             return 0;
         }
+    } else if (argc == 2 && *argv[1] == 'r') {
+        srand(unsigned(time(0)));
+        n = rand()%20 + 1;
+        m = rand()%20 + 1;
+        std::cout << "Cannibal number: " << n << "\n";
+        std::cout << "Pot capacity: " << m << "\n";
     } else {
         flag = true;
     }
+
     if (flag) {
         do {
             std::cout << "Enter the number of cannibals: ";
@@ -103,6 +111,10 @@ int main(int argc, char **argv) {
         FILE *f = fopen(argv[2], "r");
         fscanf(f, "%d %d", &n, &m);
         fclose(f);
+        std::ofstream out;
+        out.open(params[3]);
+        out << "";
+        out.close();
     }
 
 
