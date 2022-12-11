@@ -46,19 +46,40 @@ void *Cannibal(void *param) {
     }
 }
 
-int main() {
+int main(int argc, char **argv) {
     int n, m;
-    do {
-        std::cout << "Enter the number of cannibals: ";
-        std::cin >> n;
-    } while (n <= 0);
+    bool flag = false;
+    if (argc == 4) {
+        if (*argv[1] == 'i') {
+            try {
+                n = std::stoi(argv[2]);
+                m = std::stoi(argv[3]);
+                if (n <= 0 || m <= 0) {
+                    flag = true;
+                }
+            } catch (...) {
+                std::cout << "Incorrect value\n";
+                flag = true;
+            }
+        } else {
+            std::cout << "Incorrect input\n";
+            return 0;
+        }
+    } else {
+        flag = true;
+    }
+    if (flag) {
+        do {
+            std::cout << "Enter the number of cannibals: ";
+            std::cin >> n;
+        } while (n <= 0);
 
-    do {
-        std::cout << "Enter pot capacity: ";
-        std::cin >> m;
-    } while (m <= 0);
-
-
+        do {
+            std::cout << "Enter pot capacity: ";
+            std::cin >> m;
+        } while (m <= 0);
+    }
+    
     potCapacity = m;
     isChefSleeping = false; // Так как еды в горшке нет, повар просыпается и готовит ее.
 
