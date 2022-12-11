@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <fstream>
 
 const int chefNumber = 1; // Количество поваров.
 
@@ -13,6 +14,9 @@ bool isChefSleeping; // Хранит true, если повар спит. Ина�
 
 sem_t sem; // Семафор для синхронизации потоков.
 
+char **params; // Аргументы командной строки.
+bool isFileIO = false;
+
 // Функция потоков–производителей (поваров).
 void *Chef(void *param) {
     int pNum = *((int *) param);
@@ -21,6 +25,12 @@ void *Chef(void *param) {
         if (!isChefSleeping) {
             sleep(1); // Имитация времени приготовления еды.
             potValue = potCapacity; // Повар приготовил еду.
+            if (isFileIO) {
+                std::ofstream out;
+                out.open(params[3], std::ios::app);
+                out << "Chef " << pNum << " has just cooked the food. Pot currentAmount = " << potValue << "\n";
+                out.close();
+            }
             printf("Chef %d has just cooked the food. Pot currentAmount = %d\n", pNum, potValue);
             isChefSleeping = true; // Когда еда готова, повар идет спать.
         }
@@ -36,6 +46,12 @@ void *Cannibal(void *param) {
         if (potValue > 0) {
             if (isChefSleeping) {
                 --potValue; // Еды стало на единицу меньше.
+                if (isFileIO) {
+                    std::ofstream out;
+                    out.open(params[3], std::ios::app);
+                    out << "Cannibal " << cNum << " just ate food. Pot currentAmount = " << potValue << "\n";
+                    out.close();
+                }
                 printf("Cannibal %d just ate food. Pot currentAmount = %d\n", cNum, potValue);
             }
         } else {
@@ -49,6 +65,7 @@ void *Cannibal(void *param) {
 int main(int argc, char **argv) {
     int n, m;
     bool flag = false;
+    params = argv;
     if (argc == 4) {
         if (*argv[1] == 'i') {
             try {
@@ -61,7 +78,10 @@ int main(int argc, char **argv) {
                 std::cout << "Incorrect value\n";
                 flag = true;
             }
-        } else {
+        } else if (*argv[1] == 'f') {
+            isFileIO = true;
+        }
+        else {
             std::cout << "Incorrect input\n";
             return 0;
         }
@@ -79,7 +99,13 @@ int main(int argc, char **argv) {
             std::cin >> m;
         } while (m <= 0);
     }
-    
+    if (isFileIO) {
+        FILE *f = fopen(argv[2], "r");
+        fscanf(f, "%d %d", &n, &m);
+        fclose(f);
+    }
+
+
     potCapacity = m;
     isChefSleeping = false; // Так как еды в горшке нет, повар просыпается и готовит ее.
 
