@@ -66,6 +66,8 @@ void *Cannibal(void *param) {
 int main(int argc, char **argv) {
     int n, m;
     bool flag = false;
+
+    // Обработка аргументов командной строки.
     params = argv;
     if (argc == 4) {
         if (*argv[1] == 'i') {
