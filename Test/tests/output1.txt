@@ -1,0 +1,10 @@
+Chef 1 has just cooked the food. Pot currentAmount = 1
+Cannibal 1 just ate food. Pot currentAmount = 0
+Chef 1 has just cooked the food. Pot currentAmount = 1
+Cannibal 1 just ate food. Pot currentAmount = 0
+Chef 1 has just cooked the food. Pot currentAmount = 1
+Cannibal 1 just ate food. Pot currentAmount = 0
+Chef 1 has just cooked the food. Pot currentAmount = 1
+Cannibal 1 just ate food. Pot currentAmount = 0
+Chef 1 has just cooked the food. Pot currentAmount = 1
+Cannibal 1 just ate food. Pot currentAmount = 0
